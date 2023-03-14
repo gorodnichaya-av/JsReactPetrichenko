@@ -1,0 +1,1 @@
+# JsReactPetrichenko is tested file
