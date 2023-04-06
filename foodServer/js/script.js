@@ -318,6 +318,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Slider
     const slides = document.querySelectorAll('.offer__slide'),
+          slider = document.querySelector('.offer__slider'),
           prev = document.querySelector('.offer__slider-prev'),
           next = document.querySelector('.offer__slider-next'),
           currentSlide = document.querySelector('#current'),
@@ -343,6 +344,26 @@ window.addEventListener('DOMContentLoaded', () => {
         slide.style.width = width;
     });
 
+    slider.style.position = 'relative';
+
+    const dots = document.createElement('ol'),
+          dotsArr = [];
+    dots.classList.add('carousel-indicators');
+    slider.append(dots);
+
+    for (let i = 0; i < slides.length; i++) {
+       const dot = document.createElement('li');
+       dot.setAttribute('data-slide-to', i + 1);
+       dot.classList.add('dot');
+
+        if (i == 0) {
+            dot.style.opacity = 1;
+        }
+
+       dots.append(dot);
+       dotsArr.push(dot);
+    }
+
     next.addEventListener('click', () => {
         if (offset == +width.slice(0, width.length - 2) * (slides.length -1)) {
             offset = 0;
@@ -358,7 +379,8 @@ window.addEventListener('DOMContentLoaded', () => {
             slideIndex++;
         }
 
-        currentSlide.textContent = (slideIndex < 10) ? `0${slideIndex}` : slideIndex;
+        setCurrentSLideIndicator (); 
+
     });
 
     prev.addEventListener('click', () => {
@@ -376,8 +398,28 @@ window.addEventListener('DOMContentLoaded', () => {
             slideIndex--;
         }
 
-        currentSlide.textContent = (slideIndex < 10) ? `0${slideIndex}` : slideIndex;
+        setCurrentSLideIndicator ();
     });
+
+    dotsArr.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const slideTo = e.target.getAttribute('data-slide-to');
+
+            slideIndex = slideTo;
+            offset = +width.slice(0, width.length - 2) * (slideTo -1);
+
+            sliderInner.style.transform = `translateX(-${offset}px)`;
+
+            setCurrentSLideIndicator ();
+        })
+    });
+
+    function setCurrentSLideIndicator () {
+        currentSlide.textContent = (slideIndex < 10) ? `0${slideIndex}` : slideIndex;
+
+        dotsArr.forEach(dot => dot.style.opacity = '0.5');
+        dotsArr[slideIndex - 1].style.opacity = '1';
+    }
 
 
     // Simple Slider
