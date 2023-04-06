@@ -189,18 +189,26 @@ window.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     };
 
-    getResources('http://localhost:3000/menu')
+    // create cards with Axios library
+    axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.forEach(({img, altimg, title, descr, price}) => {
-               new MenuItem(img, altimg, title, descr, price, '.menu .container').render(); 
+            data.data.forEach(({img, altimg, title, descr, price}) => {
+                new MenuItem(img, altimg, title, descr, price, '.menu .container').render(); 
             })
         });
 
+    // create cards with Fetch
+    // getResources('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.forEach(({img, altimg, title, descr, price}) => {
+    //            new MenuItem(img, altimg, title, descr, price, '.menu .container').render(); 
+    //         })
+    //     });
 
-    // create 1 time html on fly
+
+    // create 1 time card html on fly
     // getResources('http://localhost:3000/menu')
     //     .then(data => creareCard(data));
-
     // function creareCard(data) {
     //     data.forEach(({img, altimg, title, descr, price}) => {
     //         const element = document.createElement('div');
