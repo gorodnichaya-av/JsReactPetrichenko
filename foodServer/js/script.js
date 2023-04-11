@@ -466,13 +466,30 @@ window.addEventListener('DOMContentLoaded', () => {
         height, weight, age, 
         ratio = 1.375;
 
+    sex = (localStorage.getItem('sex')) ? localStorage.getItem('sex') : localStorage.setItem('sex', sex);
+    ratio = (localStorage.getItem('ratio')) ? localStorage.getItem('ratio') : localStorage.setItem('ratio', ratio);
+
+    function initLocalStorageClass(selector, activeClass) {
+        const elements = document.querySelectorAll(selector);
+
+        elements.forEach(elem => {
+            elem.classList.remove(activeClass);
+            if(elem.getAttribute('id') === sex) {
+                elem.classList.add(activeClass);
+            }
+            if(elem.getAttribute('data-ratio') === ratio) {
+                elem.classList.add(activeClass);
+            }
+        });
+    }
+
+    initLocalStorageClass('.calculating__choose-item', 'calculating__choose-item_active');
+
     function calcTotal () {
         if (!sex || !height || !weight || !age || !ratio) {
             result.textContent = '_____';
             return;
         }
-
-        console.log(sex, height, weight, age, ratio);
 
         if (sex === 'female') {
             result.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
@@ -490,8 +507,10 @@ window.addEventListener('DOMContentLoaded', () => {
             elem.addEventListener('click', (e) => {
                 if(e.target.getAttribute('data-ratio')) {
                     ratio = +e.target.getAttribute('data-ratio');
+                    localStorage.setItem('ratio', ratio);
                 } else {
                     sex = e.target.getAttribute('id');
+                    localStorage.setItem('sex', sex);
                 }
     
                 elements.forEach(elem => {
@@ -513,6 +532,13 @@ window.addEventListener('DOMContentLoaded', () => {
         const input = document.querySelector(selector);
 
         input.addEventListener('input', () => {
+
+            if (input.value.match(/\D/g)) {
+                input.style.border = '1px solid red';
+            } else {
+                input.style.border = 'none';
+            }
+
             switch(input.getAttribute('id')) {
                 case 'height':
                     height = +input.value;
