@@ -3,20 +3,22 @@
 class User {
     constructor(name, age) {
         this.name = name;
-        this.userAge = age;
+        this._age = age;
     }
+
+    #surname = 'Surname';
 
     say() {
-        console.log(`User's name ${this.name}, age ${this.userAge}`);
+        console.log(`User's name ${this.name} ${this.#surname}, age ${this._age}`);
     }
 
-    getAge() {
-        return this.userAge;
+    get age() {
+        return this._age;
     }
 
-    setAge(age) {
+    set age(age) {
         if (typeof age === 'number' && age > 0 && age < 110) {
-            this.userAge = age;
+            this._age = age;
         } else {
             console.log('error');
         }
@@ -27,12 +29,8 @@ class User {
 
 const alex = new User('Alex', 23);
 console.log(alex.name);
-console.log(alex.getAge());
-
-alex.setAge(30);
-alex.setAge(300);
-
-console.log(alex.getAge());
+console.log(alex.surname);
+console.log(alex.age);
 
 alex.say();
 
