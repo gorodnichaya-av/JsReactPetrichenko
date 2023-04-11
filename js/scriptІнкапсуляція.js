@@ -1,25 +1,27 @@
 'use strict';
 
-function User(name, age) {
-    this.name = name;
-    let userAge = age;
+class User {
+    constructor(name, age) {
+        this.name = name;
+        this.userAge = age;
+    }
 
-    this.say = function() {
-        console.log(`User's name ${this.name}, age ${userAge}`);
-    };
+    say() {
+        console.log(`User's name ${this.name}, age ${this.userAge}`);
+    }
 
-    this.getAge = function() {
-        return userAge;
-    };
+    getAge() {
+        return this.userAge;
+    }
 
-    this.setAge = function(age) {
+    setAge(age) {
         if (typeof age === 'number' && age > 0 && age < 110) {
-            userAge = age;
+            this.userAge = age;
         } else {
             console.log('error');
         }
         
-    };
+    }
 
 }
 
