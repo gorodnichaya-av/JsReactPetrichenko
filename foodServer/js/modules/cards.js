@@ -1,3 +1,5 @@
+import { getResources } from "../services/services";
+
 function cards() {
     // SHOW dinamic menu item
 
@@ -39,16 +41,6 @@ function cards() {
             this.parent.append(element);
         }
     }
-
-    const getResources = async (url) => {
-        const res = await fetch(url);
-
-        if (!res.ok) {
-            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-        }
-
-        return await res.json();
-    };
 
     // create cards with Axios library
     axios.get('http://localhost:3000/menu')
@@ -92,4 +84,4 @@ function cards() {
 
 }
 
-module.exports = cards;
+export default cards;

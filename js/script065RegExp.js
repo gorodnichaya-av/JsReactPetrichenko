@@ -14,7 +14,7 @@
 
 
 const str = 'My name is R2D2';
-console.log(str.match(/\w\d\w\d/i));
+console.log(str.match(/\w\d\w\d/i)); //letter+number+letter+number
 console.log(str.match(/\D/ig));
 
 
